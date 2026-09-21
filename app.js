@@ -138,6 +138,42 @@ const $$ = (s, root=document) => [...root.querySelectorAll(s)];
 const toast = (msg) => { const el=$('#toast'); el.textContent=msg; el.classList.add('show'); clearTimeout(toast.t); toast.t=setTimeout(()=>el.classList.remove('show'),1700); };
 const copy = async (text) => { try { await navigator.clipboard.writeText(text); } catch { const t=document.createElement('textarea'); t.value=text; document.body.append(t); t.select(); document.execCommand('copy'); t.remove(); } toast('복사했습니다'); };
 
+const weatherUrl='https://api.open-meteo.com/v1/forecast?latitude=31.2304&longitude=121.4737&current=temperature_2m,relative_humidity_2m,weather_code,precipitation&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FShanghai&forecast_days=2';
+const weatherText=code=>code===0?['맑음','☀️']:code<=3?['구름','⛅']:code<=48?['안개','🌫️']:code<=67?['비','🌧️']:code<=77?['눈','🌨️']:code<=82?['소나기','🌦️']:code<=86?['눈','🌨️']:code<=99?['뇌우','⛈️']:['날씨 확인','☁️'];
+let weatherFetchedAt=0,weatherLoading=false;
+async function updateWeather(){
+  if(weatherLoading)return;
+  weatherLoading=true;
+  $('#weatherRefresh').disabled=true;
+  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),9000);
+  try{
+    const response=await fetch(weatherUrl,{cache:'no-store',signal:controller.signal});
+    if(!response.ok)throw new Error(`날씨 응답 ${response.status}`);
+    const data=await response.json(),current=data.current,daily=data.daily;
+    if(!current||!daily||daily.time?.length<2||!Number.isFinite(current.temperature_2m))throw new Error('날씨 데이터 누락');
+    const [condition,icon]=weatherText(current.weather_code);
+    const day=i=>`${daily.time[i].slice(5).replace('-','/')} ${Math.round(daily.temperature_2m_max[i])}/${Math.round(daily.temperature_2m_min[i])}℃ · ${weatherText(daily.weather_code[i])[0]} · 비 ${daily.precipitation_probability_max[i]??'?'}%`;
+    $('#weatherIcon').textContent=icon;
+    $('#weatherSummary').textContent=`상하이 현재 ${Math.round(current.temperature_2m)}℃ · ${condition}`;
+    $('#weatherDetails').textContent=`오늘 ${day(0)}\n내일 ${day(1)}`;
+    $('#weatherUpdated').textContent=`상하이 ${current.time.slice(5).replace('T',' ')} 기준 · Open-Meteo 예보`;
+    weatherFetchedAt=Date.now();
+  }catch{
+    $('#weatherIcon').textContent='☁️';
+    $('#weatherSummary').textContent='실시간 날씨를 불러오지 못했습니다';
+    $('#weatherDetails').textContent='인터넷 연결을 확인하거나 중국기상 날씨 페이지에서 오늘·내일 날씨를 확인하세요.';
+    $('#weatherUpdated').textContent='이전에 표시된 예보를 현재 날씨로 사용하지 않습니다';
+    weatherFetchedAt=0;
+  }finally{
+    clearTimeout(timer);weatherLoading=false;$('#weatherRefresh').disabled=false;
+  }
+}
+$('#weatherRefresh').addEventListener('click',updateWeather);
+addEventListener('online',()=>{if(Date.now()-weatherFetchedAt>15*60*1000)updateWeather();});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&Date.now()-weatherFetchedAt>30*60*1000)updateWeather();});
+setInterval(()=>{if(!document.hidden&&Date.now()-weatherFetchedAt>30*60*1000)updateWeather();},30*60*1000);
+updateWeather();
+
 $$('.day').forEach((day,dayIndex)=>{
   const route=dayRoutes[dayIndex]; if(!route)return;
   const stops=route.stops.map((s,i)=>{const url=`https://uri.amap.com/search?keyword=${encodeURIComponent(s[2])}&city=310000&view=map&src=shanghai-trip-2026&callnative=1`;return `<li><a href="${url}" target="_blank" rel="noopener"><b>${i+1}</b><span><strong>${s[1]}</strong><small>(${s[0]})</small></span></a>${i<route.stops.length-1?`<em>↓ ${s[3]}</em>`:''}</li>`;}).join('');

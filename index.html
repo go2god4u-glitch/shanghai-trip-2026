@@ -35,8 +35,8 @@
 
   <main>
     <section id="plan" class="panel is-active">
-      <div class="notice weather">
-        <span>☁️</span><div><strong>23일 29/23℃ · 24일 29/23℃ · 25일 31/24℃</strong><br>덥고 습함. 25일 오후 소나기 가능, 작은 우산 필수.</div>
+      <div class="notice weather" id="weatherCard" aria-live="polite">
+        <span id="weatherIcon">☁️</span><div class="weather-content"><strong id="weatherSummary">상하이 오늘·내일 날씨 불러오는 중…</strong><div id="weatherDetails">인터넷 연결 후 최신 정보를 확인합니다.</div><div class="weather-meta"><small id="weatherUpdated"></small><button id="weatherRefresh" type="button">새로고침</button><a href="https://sh.weather.com.cn/weather/101020100.shtml" target="_blank" rel="noopener">중국기상 날씨 보기</a></div></div>
       </div>
       <div class="notice holiday">
         <span>🌕</span><div><strong>25일부터 중국 중추절 연휴</strong><br>관광지·상권·교통 혼잡 예상. 귀국일 13:15 호텔 출발.</div>
@@ -170,7 +170,7 @@
     <div id="foodDetail"></div>
   </dialog>
 
-  <footer>Made for Shanghai · 정보 갱신 2026.09.21 · 버전 v1.2.1</footer>
+  <footer>Made for Shanghai · 정보 갱신 2026.09.21 · 버전 v1.3.0</footer>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="vendor/leaflet.js" defer></script>
   <script src="app.js" defer></script>
