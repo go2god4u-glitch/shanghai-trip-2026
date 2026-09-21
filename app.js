@@ -4,7 +4,10 @@ const places = [
   {name:'武康大楼',ko:'우캉맨션',address:'上海市徐汇区淮海中路1850号',tag:'산책'},
   {name:'安福路',ko:'안푸루',address:'上海市徐汇区安福路',tag:'산책'},
   {name:'栋梁之家 Maison Dongliang',ko:'메종 동량',address:'上海市长宁区武夷路168号174幢',tag:'쇼핑'},
-  {name:'迷上 Prada 荣宅',ko:'Mi Shang Prada Rong Zhai',address:'上海市静安区陕西北路186号',tag:'칵테일'},
+  {name:'夜上海',ko:'예상하이 · 신톈디 저녁',address:'上海市黄浦区湖滨路168号无限极荟307',tag:'저녁 1순위'},
+  {name:'Il Teatro',ko:'일 테아트로 · 이탈리안 대안',address:'上海市黄浦区太仓路181弄新天地北里19号',tag:'저녁 대안'},
+  {name:'The Refinery',ko:'더 리파이너리 · 그릴 대안',address:'上海市黄浦区太仓路181弄新天地北里11号',tag:'저녁 대안'},
+  {name:'Green & Safe',ko:'그린 앤 세이프 · 가벼운 대안',address:'上海市黄浦区太仓路181弄新天地北里1楼22号',tag:'저녁 대안'},
   {name:'张园',ko:'장위안',address:'上海市静安区南京西路588号',tag:'야경'},
   {name:'HARMAY 話梅（新天地店）',ko:'HARMAY Xintiandi',address:'上海市黄浦区黄陂南路380号',tag:'쇼핑'},
   {name:'茉莉奶白 Molly Tea（新天地店）',ko:'Molly Tea Xintiandi',address:'上海市黄浦区兴业路123号新天地时尚I期3楼',tag:'티'},
@@ -22,7 +25,7 @@ const nameReadings = [
   ['上海浦东国际机场','상하이 푸둥 궈지 지창'],
   ['很久以前羊肉串','헌지우이첸 양러우촨'],
   ['武康大楼','우캉 다러우'],['武康路','우캉루'],['安福路','안푸루'],
-  ['栋梁之家','둥량즈자'],['迷上','미상'],['荣宅','룽자이'],
+  ['栋梁之家','둥량즈자'],['夜上海','예 상하이'],
   ['张园','장위안'],['南京西路','난징 시루'],['南京东路','난징 둥루'],
   ['大壶春','다후춘'],['新天地','신톈디'],['話梅','화메이'],['茉莉奶白','모리 나이바이'],
   ['御宝轩','위바오쉬안'],['外滩源','와이탄위안'],['外滩','와이탄'],
@@ -34,7 +37,7 @@ const nameReadings = [
 function nameReading(text){return [...new Set([...text.matchAll(/[\u3400-\u9fff]+/g)].map(match=>nameReadings.find(([chinese])=>match[0].includes(chinese))?.[1]).filter(Boolean))].join(' · ');}
 const menuReadings={
   '羊肉串':'양러우촨','羊排串':'양파이촨','烤韭菜':'카오 지우차이','拍黄瓜':'파이 황과','烤馕':'카오 낭',
-  '海胆手工意面':'하이단 서우궁 이몐','当季小食':'당지 샤오스',
+  '红烧肉':'훙사오러우',
   '鲜肉生煎':'셴러우 성젠','豆浆':'더우장','油条':'여우탸오',
   '笋尖鲜虾饺 ¥48':'쑨젠 셴샤자오','香菇烧卖皇 ¥48':'샹구 사오마이황','金网脆皮虾肠粉 ¥52':'진왕 추이피 샤 창펀',
   '蜜汁叉烧酥 ¥42':'미즈 차사오쑤','奶皇流沙包 ¥42':'나이황 류사바오','上海小笼包 ¥36':'상하이 샤오룽바오','腊味煎萝卜糕 ¥45':'라웨이 젠뤄보가오',
@@ -51,7 +54,7 @@ const phraseReadings={
   '请打表。':'칭 다뱌오',
   '请帮我们叫救护车。':'칭 방 워먼 자오 지우후처',
   '我们两个人，羊肉串先来十串，不要太辣。':'워먼 량거 런, 양러우촨 셴 라이 스촨, 부야오 타이 라',
-  '我们预订了两位。请推荐不太甜的招牌鸡尾酒。':'워먼 위딩 러 량웨이. 칭 투이젠 부 타이 톈 더 자오파이 지웨이주',
+  '我们两个人，想点红烧肉和一份蔬菜。':'워먼 량거 런, 샹 뎬 훙사오러우 허 이펀 수차이',
   '鲜肉生煎一两，再来一杯豆浆。':'셴러우 성젠 이량, 짜이 라이 이베이 더우장',
   '我们主要想吃点心，请按两个人的量推荐，不要点太多。':'워먼 주야오 샹 츠 뎬신, 칭 안 량거 런 더 량 투이젠, 부야오 뎬 타이 둬',
   '蟹粉拌面一份，我们两个人分着吃。':'셰펀 반몐 이펀, 워먼 량거 런 펀저 츠',
@@ -64,13 +67,14 @@ const scheduleMaps = {
   '2026-09-23T12:40:00+08:00':['很久以前羊肉串 打浦路店','헌지우이첸 양꼬치 다푸루점'],
   '2026-09-23T14:30:00+08:00':['武康大楼','우캉맨션 · 산책 시작점'],
   '2026-09-23T16:15:00+08:00':['栋梁之家 Maison Dongliang 武夷路','Maison Dongliang'],
-  '2026-09-23T18:00:00+08:00':['迷上 Prada 荣宅','Mi Shang Prada Rong Zhai'],
-  '2026-09-23T20:00:00+08:00':['张园','장위안 · 난징시루'],
+  '2026-09-23T17:30:00+08:00':['HARMAY 話梅 新天地店','HARMAY 신톈디점'],
+  '2026-09-23T18:10:00+08:00':['茉莉奶白 新天地店','Molly Tea 신톈디점'],
+  '2026-09-23T18:40:00+08:00':['夜上海 湖滨路168号','예상하이 · 저녁 1순위'],
+  '2026-09-23T20:30:00+08:00':['张园','장위안 · 난징시루'],
   '2026-09-24T08:30:00+08:00':['大壶春 四川中路店','다후춘 · 상하이식 아침 후보'],
-  '2026-09-24T10:00:00+08:00':['HARMAY 話梅 新天地店','HARMAY 신톈디점'],
-  '2026-09-24T10:50:00+08:00':['茉莉奶白 新天地店','Molly Tea 신톈디점'],
+  '2026-09-24T09:45:00+08:00':['外滩源','와이탄위안 · 예약 식당 주변'],
   '2026-09-24T12:00:00+08:00':['御宝轩 益丰外滩源店','Imperial Treasure · 예약 장소'],
-  '2026-09-24T13:40:00+08:00':['外滩源','와이탄위안 · 산책 시작점'],
+  '2026-09-24T13:40:00+08:00':['外滩','와이탄 강변'],
   '2026-09-24T15:15:00+08:00':['庄氏隆兴面馆 浙江中路店','장씨네 게살국수'],
   '2026-09-24T16:00:00+08:00':['南京东路步行街','난징동루 보행자거리'],
   '2026-09-24T19:00:00+08:00':['晟永兴 外滩店','성용싱 와이탄점'],
@@ -86,15 +90,15 @@ const foodDetails = {
     name:'헌지우이첸 양꼬치 (很久以前羊肉串)', badge:'첫날 점심 · 예약 없음', address:'다푸루점 (打浦路店)', budget:'2인 약 ¥250~400 예상',
     intro:'상하이 도착 직후 호텔 가까이에서 먹는 양꼬치 체인입니다. 입국 시간이 흔들릴 수 있어 예약 없이 가는 일정입니다.',
     menu:[['羊肉串','양꼬치','우선 주문'],['羊排串','양갈비 꼬치','고기 맛이 진함'],['烤韭菜','부추구이','고기 사이 곁들임'],['拍黄瓜','오이무침','입가심'],['烤馕','구운 난','마지막에 1개']],
-    order:'2인은 꼬치 10~14개부터 시작하고, 채소 1개와 찬요리 1개를 더한 뒤 부족하면 추가하세요. 첫날 저녁 Prada 일정이 있으므로 과식하지 않는 것이 핵심입니다.',
+    order:'2인은 꼬치 10~14개부터 시작하고, 채소 1개와 찬요리 1개를 더한 뒤 부족하면 추가하세요. 신톈디 저녁도 예정되어 있으므로 과식하지 않는 것이 핵심입니다.',
     phrase:'我们两个人，羊肉串先来十串，不要太辣。 · 두 명이고 양꼬치 10개부터, 너무 맵지 않게 주세요.'
   },
-  '2026-09-23T18:00:00+08:00':{
-    name:'Mi Shang Prada Rong Zhai (迷上 Prada 荣宅)', badge:'칵테일 + 가벼운 저녁 · 예약 권장', address:'산시베이루 186호 (陕西北路186号)', budget:'칵테일·파스타 기준 2인 약 ¥700~1,200 예상',
-    intro:'Prada가 복원한 역사 건축 안에서 공간과 칵테일을 즐기는 곳입니다. 이날은 풀코스보다 칵테일 1잔씩과 파스타 중심이 일정에 맞습니다.',
-    menu:[['Signature Cocktail','시그니처 칵테일','각 1잔'],['海胆手工意面','성게 수제 파스타','계절 메뉴면 우선'],['当季小食','제철 스낵','배고픔에 따라']],
-    order:'18시 전후 예약을 권장합니다. 성게·해초 페스토 수제 푸실리는 계절 메뉴라 당일 제공 여부를 확인하세요. 칵테일 메뉴는 직원에게 달지 않은 추천으로 요청하면 좋습니다.',
-    phrase:'我们预订了两位。请推荐不太甜的招牌鸡尾酒。 · 2인 예약했습니다. 너무 달지 않은 시그니처 칵테일을 추천해주세요.'
+  '2026-09-23T18:40:00+08:00':{
+    name:'예상하이 (夜上海)', badge:'신톈디 저녁 1순위 · 예약 전 영업 확인', address:'후빈루 168호 무한지후이 307 (湖滨路168号无限极荟307)', budget:'메뉴·가격은 방문 전 앱에서 확인',
+    intro:'신톈디 쇼핑 구간 가까이에 있는 상하이 요리 식당입니다. 첫날 저녁은 지역 음식으로 채우고, 취향에 맞지 않으면 아래 대안 3곳에서 고르세요.',
+    menu:[['红烧肉','상하이식 홍샤오러우','대표 상하이 요리'],['时蔬','제철 채소','고기와 곁들이기']],
+    order:'둘이라면 고기 요리 하나와 채소 하나부터 주문하세요. 다음 날 점심은 딤섬, 저녁은 베이징덕이므로 첫날 오리·딤섬은 피하는 편이 메뉴가 덜 겹칩니다. 메뉴 제공·가격·예약 여부는 당일 확인하세요.',
+    phrase:'我们两个人，想点红烧肉和一份蔬菜。 · 두 명이고 홍샤오러우와 채소 한 접시를 주문하고 싶습니다.'
   },
   '2026-09-24T08:30:00+08:00':{
     name:'다후춘 (大壶春)', badge:'현지식 아침 후보 · 가볍게', address:'쓰촨중루점 (四川中路店)', budget:'2인 약 ¥40~80 예상',
@@ -126,16 +130,23 @@ const foodDetails = {
   }
 };
 
+const dayOneDinners=[
+  {name:'예상하이',chinese:'夜上海',reading:'예 상하이',kind:'상하이식 · 1순위',address:'湖滨路168号无限极荟307',dish:'홍샤오러우와 채소',note:'신톈디 쇼핑 뒤 지역 음식으로 저녁. 오리·딤섬은 다음 날과 겹쳐 피하기.',search:'夜上海 湖滨路168号',source:'https://amap.com/place/B0IB7MTZDZ'},
+  {name:'일 테아트로',chinese:'Il Teatro',reading:'일 테아트로',kind:'이탈리안 · 대안',address:'太仓路181弄新天地北里19号',dish:'수제 피자·파스타',note:'첫날 저녁을 편안한 이탈리안으로 바꾸고 싶을 때.',search:'Il Teatro 新天地 上海',source:'https://english.shanghai.gov.cn/en-EditorsPick-ShopinShanghai/20260123/e2d3d081256341aa8df07ff652705f5d.html'},
+  {name:'더 리파이너리',chinese:'The Refinery',reading:'더 리파이너리',kind:'그릴·칵테일 · 대안',address:'太仓路181弄新天地北里11号',dish:'스테이크·버거·칵테일',note:'저녁 식사에 칵테일도 곁들이고 싶을 때.',search:'The Refinery 新天地 上海',source:'https://english.shanghai.gov.cn/en-EditorsPick-ShopinShanghai/20260123/e2d3d081256341aa8df07ff652705f5d.html'},
+  {name:'그린 앤 세이프',chinese:'Green & Safe',reading:'그린 앤 세이프',kind:'가벼운 저녁 · 대안',address:'太仓路181弄新天地北里1楼22号',dish:'리소토·샐러드',note:'양꼬치 점심 뒤 저녁을 가볍게 먹고 싶을 때.',search:'Green & Safe 新天地 上海',source:'https://english.shanghai.gov.cn/en-EditorsPick-ShopinShanghai/20260123/e2d3d081256341aa8df07ff652705f5d.html'}
+];
+
 const dayRoutes = [
-  {title:'1일차 전체 동선',note:'공항 → 호텔 → 프렌치 컨세션 → 징안 → 호텔',stops:[['PVG T1','푸동공항','上海浦东国际机场1号航站楼','DiDi 50~70분'],['Pullman','호텔·짐 보관','上海斯格威铂尔曼大酒店','도보 5~10분'],['很久以前羊肉串','양꼬치','很久以前羊肉串 打浦路店','DiDi 약 20분'],['武康大楼·安福路','우캉맨션·안푸루','武康大楼','도보 산책'],['Maison Dongliang','메종 동량','栋梁之家 Maison Dongliang 武夷路','DiDi 약 20분'],['Prada 荣宅','프라다 룽자이','迷上 Prada 荣宅','도보 10~15분'],['张园·南京西路','장위안·난징시루','张园','DiDi 약 20분 → 호텔']]},
-  {title:'2일차 전체 동선',note:'호텔 → 신톈디 → 와이탄위안 → 난징동루 → 와이탄',stops:[['大壶春','다후춘 아침','大壶春 四川中路店','DiDi 후 식사'],['HARMAY 新天地','하메이 신톈디','HARMAY 話梅 新天地店','도보'],['Molly Tea 新天地','몰리티 신톈디','茉莉奶白 新天地店','DiDi · 11:20 출발'],['御宝轩','Imperial Treasure','御宝轩 益丰外滩源店','도보'],['外滩源','와이탄위안','外滩源','도보 또는 짧은 DiDi'],['庄氏隆兴面馆','장씨네 게살국수','庄氏隆兴面馆 浙江中路店','도보'],['南京东路','난징동루','南京东路步行街','도보·휴식'],['晟永兴 外滩店','성용싱 와이탄점','晟永兴 外滩店','도보'],['外滩·外滩源','와이탄 야경·빛축제','外滩','DiDi → 호텔']]},
+  {title:'1일차 전체 동선',note:'공항 → 호텔 → 우캉루 → 신톈디·저녁 → 장위안',stops:[['PVG T1','푸동공항','上海浦东国际机场1号航站楼','DiDi 50~70분'],['Pullman','호텔·짐 보관','上海斯格威铂尔曼大酒店','도보 5~10분'],['很久以前羊肉串','양꼬치','很久以前羊肉串 打浦路店','DiDi 약 20분'],['武康大楼·安福路','우캉맨션·안푸루','武康大楼','도보 산책'],['Maison Dongliang','메종 동량','栋梁之家 Maison Dongliang 武夷路','DiDi 약 20~30분'],['HARMAY 新天地','하메이 신톈디','HARMAY 話梅 新天地店','도보 약 5분'],['Molly Tea 新天地','몰리티 신톈디','茉莉奶白 上海新天地店','도보 약 5분'],['夜上海','예상하이 · 저녁','夜上海 湖滨路168号','DiDi 약 15~20분'],['张园·南京西路','장위안·난징시루','张园','DiDi → 호텔']]},
+  {title:'2일차 전체 동선',note:'호텔 → 다후춘 → 와이탄위안·예약 식당 → 와이탄·난징동루',stops:[['大壶春','다후춘 아침','大壶春 四川中路店','도보 또는 짧은 DiDi'],['外滩源','와이탄위안 아침 산책','外滩源','도보 · 11:40 식당 도착'],['御宝轩','Imperial Treasure','御宝轩 益丰外滩源店','도보'],['外滩','와이탄 강변','外滩','도보 또는 짧은 DiDi'],['庄氏隆兴面馆','장씨네 게살국수','庄氏隆兴面馆 浙江中路店','도보'],['南京东路','난징동루','南京东路步行街','도보·휴식'],['晟永兴 外滩店','성용싱 와이탄점','晟永兴 外滩店','도보'],['外滩·外滩源','와이탄 야경·빛축제','外滩','DiDi → 호텔']]},
   {title:'3일차 전체 동선',note:'호텔 근처 산책 → 호텔 → 푸동공항',stops:[['Pullman','호텔 출발','上海斯格威铂尔曼大酒店','도보 또는 짧은 DiDi'],['田子坊·思南路','톈즈팡·쓰난루','田子坊','호텔 복귀'],['Pullman','체크아웃·점심','上海斯格威铂尔曼大酒店','13:15 출발'],['PVG T1','푸동공항 T1','上海浦东国际机场1号航站楼','DiDi 60~80분'],['MU5051','17:40 출발','上海浦东国际机场1号航站楼','20:45 인천 도착']]}
 ];
 
 // Coordinates are either official Amap POI (GCJ-02) or verified address coordinates converted from WGS84.
 const dayMapPoints = [
-  [[121.8017619,31.1524464,'wgs'],[121.4664011,31.2062423,'wgs'],[121.468743,31.206185,'gcj'],[121.4337292,31.2062561,'wgs'],[121.427391,31.213324,'gcj'],[121.455673,31.226805,'gcj'],[121.460064,31.227971,'gcj']],
-  [[121.4847725,31.2367029,'wgs'],[121.4711337,31.2211074,'wgs'],[121.4706084,31.2209090,'wgs'],[121.488895,31.240436,'gcj'],[121.4841599,31.2443887,'wgs'],[121.4729059,31.2387686,'wgs'],[121.4792191,31.2391470,'wgs'],[121.4824706,31.2350025,'wgs'],[121.4876320,31.2353356,'wgs']],
+  [[121.8017619,31.1524464,'wgs'],[121.4664011,31.2062423,'wgs'],[121.468743,31.206185,'gcj'],[121.4337292,31.2062561,'wgs'],[121.427391,31.213324,'gcj'],[121.475595,31.219361,'gcj'],[121.475036,31.219069,'gcj'],[121.477836,31.220647,'gcj'],[121.460064,31.227971,'gcj']],
+  [[121.4847725,31.2367029,'wgs'],[121.4841599,31.2443887,'wgs'],[121.488895,31.240436,'gcj'],[121.4876320,31.2353356,'wgs'],[121.4729059,31.2387686,'wgs'],[121.4792191,31.2391470,'wgs'],[121.4824706,31.2350025,'wgs'],[121.4876320,31.2353356,'wgs']],
   [[121.4664011,31.2062423,'wgs'],[121.4641036,31.2103400,'wgs'],[121.4664011,31.2062423,'wgs'],[121.8017619,31.1524464,'wgs'],[121.8017619,31.1524464,'wgs']]
 ];
 
@@ -179,6 +190,8 @@ const $ = (s, root=document) => root.querySelector(s);
 const $$ = (s, root=document) => [...root.querySelectorAll(s)];
 const toast = (msg) => { const el=$('#toast'); el.textContent=msg; el.classList.add('show'); clearTimeout(toast.t); toast.t=setTimeout(()=>el.classList.remove('show'),1700); };
 const copy = async (text) => { try { await navigator.clipboard.writeText(text); } catch { const t=document.createElement('textarea'); t.value=text; document.body.append(t); t.select(); document.execCommand('copy'); t.remove(); } toast('복사했습니다'); };
+$('#dayOneDinnerOptions').innerHTML=dayOneDinners.map((d,i)=>`<article class="dinner-option"><strong>${i===0?'추천 · ':''}${d.name} (${d.chinese})</strong><small class="reading">읽기: ${d.reading}</small><small>${d.kind}</small><p><b>주소:</b> ${d.address}</p><p><b>메뉴:</b> ${d.dish}</p><p>${d.note}</p><div class="dinner-option__actions"><a href="https://uri.amap.com/search?keyword=${encodeURIComponent(d.search)}&city=310000&view=map&src=shanghai-trip-2026&callnative=1" target="_blank" rel="noopener">고덕지도 위치·경로</a><button type="button" data-dinner-copy="${i}">이름 복사</button><a href="${d.source}" target="_blank" rel="noopener">위치·메뉴 근거</a></div></article>`).join('');
+$$('[data-dinner-copy]').forEach(button=>button.addEventListener('click',()=>copy(dayOneDinners[Number(button.dataset.dinnerCopy)].chinese)));
 $$('.timeline li').forEach(li=>{
   const title=$('strong',li);
   if(!title)return;
@@ -243,7 +256,7 @@ $$('.tab').forEach(btn => btn.addEventListener('click', () => {
   window.scrollTo({top:$('.tabs').offsetTop,behavior:'smooth'});
 }));
 
-$('#placeList').innerHTML = places.map((p,i)=>`<article class="place"><div class="place__top"><button class="place__copy" data-copy-index="${i}"><strong>${p.ko}</strong><span>(${p.name})</span><small class="reading">읽기: ${nameReading(p.name)}</small></button><span class="place__tag">${p.tag}</span></div><p class="place__address">${p.address}</p><div class="place__actions"><button data-copy-address="${i}">주소 복사</button><a href="https://uri.amap.com/search?keyword=${encodeURIComponent(p.name)}&city=310000&view=map&src=shanghai-trip-2026&callnative=1" target="_blank" rel="noopener">Amap 앱 열기 (高德地图)</a></div></article>`).join('');
+$('#placeList').innerHTML = places.map((p,i)=>`<article class="place"><div class="place__top"><button class="place__copy" data-copy-index="${i}"><strong>${p.ko}</strong><span>(${p.name})</span>${nameReading(p.name)?`<small class="reading">읽기: ${nameReading(p.name)}</small>`:''}</button><span class="place__tag">${p.tag}</span></div><p class="place__address">${p.address}</p><div class="place__actions"><button data-copy-address="${i}">주소 복사</button><a href="https://uri.amap.com/search?keyword=${encodeURIComponent(p.name)}&city=310000&view=map&src=shanghai-trip-2026&callnative=1" target="_blank" rel="noopener">Amap 앱 열기 (高德地图)</a></div></article>`).join('');
 $('#foodExtraList').innerHTML=foodExtras.map(group=>`<section class="food-extra-group"><h3>${group.title} <small>${group.items.length}곳</small></h3><div class="food-extra-grid">${group.items.map(item=>{
   const mapUrl=`https://uri.amap.com/search?keyword=${encodeURIComponent(item.search)}&city=310000&view=map&src=shanghai-trip-2026&callnative=1`;
   return `<details class="food-extra-card"><summary><strong>${item.ko}</strong><span>${item.zh}</span><small class="reading">읽기: ${item.read}</small><em>${item.dish}</em></summary><div class="food-extra-card__detail"><p><b>어디:</b> ${item.area}</p><p><b>먹을 것:</b> ${item.dish}</p><p><b>방문 팁:</b> ${item.tip}</p><div class="food-extra-card__actions"><a href="${mapUrl}" target="_blank" rel="noopener">고덕지도에서 지점 보기</a><button type="button" data-extra-copy="${item.zh}">중국어 이름 복사</button><a href="${item.source}" target="_blank" rel="noopener">선정 근거</a></div></div></details>`;
@@ -309,7 +322,7 @@ addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;$(
 $('#installBtn').addEventListener('click',async()=>{if(!installPrompt)return;installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;$('#installBtn').hidden=true;});
 
 $('#downloadBtn').addEventListener('click',()=>{
-  const text=`상하이 2박 3일 핵심 일정\n\n9/23 08:55 MU5052 출발 → 양꼬치 → 武康路 우캉루/安福路 안푸루 → Maison Dongliang → Prada Rong Zhai → 张园 장위안\n9/24 HARMAY/Molly Tea → 12:00 御宝轩 Imperial Treasure(예약 확정) → 外滩源 와이탄위안 → 庄氏隆兴面馆 장씨네 게살국수 1그릇 공유 → 19:00 晟永兴 성용싱 → 外滩 와이탄 빛축제\n9/25 오전 호텔 인근 → 13:15 호텔 출발 → 17:40 MU5051 귀국\n\n긴급전화 경찰 110 · 구급 120 · 소방 119`;
+  const text=`상하이 2박 3일 핵심 일정\n\n9/23 08:55 MU5052 출발 → 양꼬치 → 우캉맨션·안푸루 → Maison Dongliang → 신톈디 HARMAY·Molly Tea → 예상하이(夜上海) 또는 신톈디 저녁 대안 → 장위안(선택)\n9/24 다후춘 → 와이탄위안 → 12:00 Imperial Treasure(예약 확정) → 와이탄 → 장씨네 게살국수 1그릇 공유 → 난징동루 → 19:00 성용싱 → 와이탄 야경\n9/25 오전 호텔 인근 → 13:15 호텔 출발 → 17:40 MU5051 귀국\n\n긴급전화 경찰 110 · 구급 120 · 소방 119`;
   const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([text],{type:'text/plain;charset=utf-8'})); a.download='상하이_핵심일정.txt'; a.click(); URL.revokeObjectURL(a.href);
 });
 
