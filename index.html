@@ -28,7 +28,7 @@
 
   <nav class="tabs" aria-label="여행 가이드">
     <button class="tab is-active" data-tab="plan">일정</button>
-    <button class="tab" data-tab="places">장소</button>
+    <button class="tab" data-tab="places">장소·맛집</button>
     <button class="tab" data-tab="prep">준비</button>
     <button class="tab" data-tab="help">현지</button>
   </nav>
@@ -85,7 +85,13 @@
     <section id="places" class="panel">
       <div class="section-head"><p>중국어가 정답</p><h2>기사님께 보여줄 장소</h2></div>
       <p class="hint">중국어 이름 아래에 대략적인 한글 발음을 적었습니다(성조 생략). 장소 이름을 누르면 중국어가 복사됩니다. “가오더 지도·Amap (高德地图)” 버튼은 설치한 Amap 앱을 엽니다.</p>
+      <a class="food-jump" href="#foodExtras">추가 맛집 25곳 · 음식 종류별로 보기 ↓</a>
       <div id="placeList" class="place-list"></div>
+      <section id="foodExtras" class="food-extras">
+        <div class="section-head"><p>일정은 그대로 · 선택지는 넓게</p><h2>요즘 많이 찾는 상하이 맛집</h2></div>
+        <p class="hint">기존 예약 식당 외에 2026년 자료로 확인한 25곳입니다. 이름을 누르면 메뉴·방문 팁이 열립니다. 지점·영업시간·대기는 당일 고덕지도에서 다시 확인하세요.</p>
+        <div id="foodExtraList"></div>
+      </section>
     </section>
 
     <section id="prep" class="panel">
@@ -170,9 +176,10 @@
     <div id="foodDetail"></div>
   </dialog>
 
-  <footer>Made for Shanghai · 정보 갱신 2026.09.21 · 버전 v1.4.0</footer>
+  <footer>Made for Shanghai · 정보 갱신 2026.09.21 · 버전 v1.5.0</footer>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <script src="vendor/leaflet.js" defer></script>
+  <script src="food-extras.js" defer></script>
   <script src="app.js" defer></script>
 </body>
 </html>

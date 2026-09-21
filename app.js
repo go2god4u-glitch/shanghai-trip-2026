@@ -244,6 +244,11 @@ $$('.tab').forEach(btn => btn.addEventListener('click', () => {
 }));
 
 $('#placeList').innerHTML = places.map((p,i)=>`<article class="place"><div class="place__top"><button class="place__copy" data-copy-index="${i}"><strong>${p.ko}</strong><span>(${p.name})</span><small class="reading">읽기: ${nameReading(p.name)}</small></button><span class="place__tag">${p.tag}</span></div><p class="place__address">${p.address}</p><div class="place__actions"><button data-copy-address="${i}">주소 복사</button><a href="https://uri.amap.com/search?keyword=${encodeURIComponent(p.name)}&city=310000&view=map&src=shanghai-trip-2026&callnative=1" target="_blank" rel="noopener">Amap 앱 열기 (高德地图)</a></div></article>`).join('');
+$('#foodExtraList').innerHTML=foodExtras.map(group=>`<section class="food-extra-group"><h3>${group.title} <small>${group.items.length}곳</small></h3><div class="food-extra-grid">${group.items.map(item=>{
+  const mapUrl=`https://uri.amap.com/search?keyword=${encodeURIComponent(item.search)}&city=310000&view=map&src=shanghai-trip-2026&callnative=1`;
+  return `<details class="food-extra-card"><summary><strong>${item.ko}</strong><span>${item.zh}</span><small class="reading">읽기: ${item.read}</small><em>${item.dish}</em></summary><div class="food-extra-card__detail"><p><b>어디:</b> ${item.area}</p><p><b>먹을 것:</b> ${item.dish}</p><p><b>방문 팁:</b> ${item.tip}</p><div class="food-extra-card__actions"><a href="${mapUrl}" target="_blank" rel="noopener">고덕지도에서 지점 보기</a><button type="button" data-extra-copy="${item.zh}">중국어 이름 복사</button><a href="${item.source}" target="_blank" rel="noopener">선정 근거</a></div></div></details>`;
+}).join('')}</div></section>`).join('');
+$$('[data-extra-copy]').forEach(button=>button.addEventListener('click',()=>copy(button.dataset.extraCopy)));
 $$('.timeline li[data-at]').forEach(li=>{
   const item=scheduleMaps[li.dataset.at];
   if(!item)return;
