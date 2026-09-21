@@ -230,6 +230,18 @@ function updateNext(){
 }
 updateNext(); setInterval(updateNext,60000);
 
+if('scrollRestoration' in history)history.scrollRestoration='manual';
+addEventListener('load',()=>{
+  const dateParts=Object.fromEntries(new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()).map(part=>[part.type,part.value]));
+  const shanghaiDate=`${dateParts.year}-${dateParts.month}-${dateParts.day}`;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    const day=$(`.day[data-trip-date="${shanghaiDate}"]`);
+    if(!day){scrollTo({top:0,behavior:'instant'});return;}
+    const tabsHeight=$('.tabs').getBoundingClientRect().height;
+    scrollTo({top:day.getBoundingClientRect().top+scrollY-tabsHeight-8,behavior:'instant'});
+  }));
+});
+
 let installPrompt;
 addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;$('#installBtn').hidden=false;});
 $('#installBtn').addEventListener('click',async()=>{if(!installPrompt)return;installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;$('#installBtn').hidden=true;});
