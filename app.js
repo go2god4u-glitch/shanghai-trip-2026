@@ -16,6 +16,48 @@ const places = [
   {name:'上海浦东国际机场1号航站楼',ko:'PVG Terminal 1',address:'上海市浦东新区迎宾大道6000号',tag:'공항'}
 ];
 
+// Quick Korean reading aids for names travelers may need to say aloud. Tones are omitted.
+const nameReadings = [
+  ['上海斯格威铂尔曼大酒店','상하이 쓰거웨이 보얼만 다지우뎬'],
+  ['上海浦东国际机场','상하이 푸둥 궈지 지창'],
+  ['很久以前羊肉串','헌지우이첸 양러우촨'],
+  ['武康大楼','우캉 다러우'],['武康路','우캉루'],['安福路','안푸루'],
+  ['栋梁之家','둥량즈자'],['迷上','미상'],['荣宅','룽자이'],
+  ['张园','장위안'],['南京西路','난징 시루'],['南京东路','난징 둥루'],
+  ['大壶春','다후춘'],['新天地','신톈디'],['話梅','화메이'],['茉莉奶白','모리 나이바이'],
+  ['御宝轩','위바오쉬안'],['外滩源','와이탄위안'],['外滩','와이탄'],
+  ['庄氏隆兴面馆','좡스 룽싱 몐관'],['晟永兴','성융싱'],
+  ['田子坊','톈쯔팡'],['思南路','쓰난루'],['高德地图','가오더 디투'],
+  ['支付宝','즈푸바오'],['微信','웨이신'],['滴滴出行','디디 추싱'],
+  ['四川中路','쓰촨 중루'],['打浦路','다푸루'],['浙江中路','저장 중루']
+];
+function nameReading(text){return [...new Set([...text.matchAll(/[\u3400-\u9fff]+/g)].map(match=>nameReadings.find(([chinese])=>match[0].includes(chinese))?.[1]).filter(Boolean))].join(' · ');}
+const menuReadings={
+  '羊肉串':'양러우촨','羊排串':'양파이촨','烤韭菜':'카오 지우차이','拍黄瓜':'파이 황과','烤馕':'카오 낭',
+  '海胆手工意面':'하이단 서우궁 이몐','当季小食':'당지 샤오스',
+  '鲜肉生煎':'셴러우 성젠','豆浆':'더우장','油条':'여우탸오',
+  '笋尖鲜虾饺 ¥48':'쑨젠 셴샤자오','香菇烧卖皇 ¥48':'샹구 사오마이황','金网脆皮虾肠粉 ¥52':'진왕 추이피 샤 창펀',
+  '蜜汁叉烧酥 ¥42':'미즈 차사오쑤','奶皇流沙包 ¥42':'나이황 류사바오','上海小笼包 ¥36':'상하이 샤오룽바오','腊味煎萝卜糕 ¥45':'라웨이 젠뤄보가오',
+  '蟹粉拌面':'셰펀 반몐','蟹粉小笼':'셰펀 샤오룽','姜茶':'장차',
+  '北京烤鸭':'베이징 카오야','鸭架汤 / 椒盐鸭架':'야자탕 / 자오옌 야자','时蔬':'스수','主食':'주스'
+};
+const phraseReadings={
+  '请带我们去这里。':'칭 따이 워먼 취 쪄리',
+  '我们有两个人。':'워먼 여우 량거 런',
+  '我们有预订。':'워먼 여우 위딩',
+  '可以点半只北京烤鸭吗？':'커이 뎬 반즈 베이징 카오야 마',
+  '不要辣，谢谢。':'부야오 라, 셰셰',
+  '可以用支付宝吗？':'커이 융 즈푸바오 마',
+  '请打表。':'칭 다뱌오',
+  '请帮我们叫救护车。':'칭 방 워먼 자오 지우후처',
+  '我们两个人，羊肉串先来十串，不要太辣。':'워먼 량거 런, 양러우촨 셴 라이 스촨, 부야오 타이 라',
+  '我们预订了两位。请推荐不太甜的招牌鸡尾酒。':'워먼 위딩 러 량웨이. 칭 투이젠 부 타이 톈 더 자오파이 지웨이주',
+  '鲜肉生煎一两，再来一杯豆浆。':'셴러우 성젠 이량, 짜이 라이 이베이 더우장',
+  '我们主要想吃点心，请按两个人的量推荐，不要点太多。':'워먼 주야오 샹 츠 뎬신, 칭 안 량거 런 더 량 투이젠, 부야오 뎬 타이 둬',
+  '蟹粉拌面一份，我们两个人分着吃。':'셰펀 반몐 이펀, 워먼 량거 런 펀저 츠',
+  '我们预订了晚上七点，两个人。北京烤鸭可以点半只吗？':'워먼 위딩 러 완상 치뎬, 량거 런. 베이징 카오야 커이 뎬 반즈 마'
+};
+
 const scheduleMaps = {
   '2026-09-23T08:55:00+09:00':['仁川国际机场1号航站楼','인천공항 T1 출발층'],
   '2026-09-23T11:10:00+08:00':['上海浦东国际机场1号航站楼','푸동공항 T1 → 호텔'],
@@ -137,6 +179,20 @@ const $ = (s, root=document) => root.querySelector(s);
 const $$ = (s, root=document) => [...root.querySelectorAll(s)];
 const toast = (msg) => { const el=$('#toast'); el.textContent=msg; el.classList.add('show'); clearTimeout(toast.t); toast.t=setTimeout(()=>el.classList.remove('show'),1700); };
 const copy = async (text) => { try { await navigator.clipboard.writeText(text); } catch { const t=document.createElement('textarea'); t.value=text; document.body.append(t); t.select(); document.execCommand('copy'); t.remove(); } toast('복사했습니다'); };
+$$('.timeline li').forEach(li=>{
+  const title=$('strong',li);
+  if(!title)return;
+  const readings=[...title.textContent.matchAll(/[\u3400-\u9fff]+/g)].map(match=>nameReading(match[0])).filter(Boolean);
+  if(readings.length)title.insertAdjacentHTML('afterend',`<small class="reading">읽기: ${[...new Set(readings)].join(' → ')}</small>`);
+});
+$$('.phrase-grid button').forEach(button=>{
+  const chinese=$('strong',button);
+  chinese.insertAdjacentHTML('afterend',`<small class="reading">읽기: ${phraseReadings[chinese.textContent]}</small>`);
+});
+$$('.app-card .app-title').forEach(title=>{
+  const reading=nameReading(title.textContent);
+  if(reading)title.insertAdjacentHTML('afterend',`<small class="reading">읽기: ${reading}</small>`);
+});
 
 const weatherUrl='https://api.open-meteo.com/v1/forecast?latitude=31.2304&longitude=121.4737&current=temperature_2m,relative_humidity_2m,weather_code,precipitation&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FShanghai&forecast_days=2';
 const weatherText=code=>code===0?['맑음','☀️']:code<=3?['구름','⛅']:code<=48?['안개','🌫️']:code<=67?['비','🌧️']:code<=77?['눈','🌨️']:code<=82?['소나기','🌦️']:code<=86?['눈','🌨️']:code<=99?['뇌우','⛈️']:['날씨 확인','☁️'];
@@ -176,7 +232,7 @@ updateWeather();
 
 $$('.day').forEach((day,dayIndex)=>{
   const route=dayRoutes[dayIndex]; if(!route)return;
-  const stops=route.stops.map((s,i)=>{const url=`https://uri.amap.com/search?keyword=${encodeURIComponent(s[2])}&city=310000&view=map&src=shanghai-trip-2026&callnative=1`;return `<li><a href="${url}" target="_blank" rel="noopener"><b>${i+1}</b><span><strong>${s[1]}</strong><small>(${s[0]})</small></span></a>${i<route.stops.length-1?`<em>↓ ${s[3]}</em>`:''}</li>`;}).join('');
+  const stops=route.stops.map((s,i)=>{const url=`https://uri.amap.com/search?keyword=${encodeURIComponent(s[2])}&city=310000&view=map&src=shanghai-trip-2026&callnative=1`;const reading=nameReading(s[2]);return `<li><a href="${url}" target="_blank" rel="noopener"><b>${i+1}</b><span><strong>${s[1]}</strong><small>(${s[0]})</small>${reading?`<small class="reading">${reading}</small>`:''}</span></a>${i<route.stops.length-1?`<em>↓ ${s[3]}</em>`:''}</li>`;}).join('');
   day.querySelector('header').insertAdjacentHTML('afterend',`<section class="day-route-map"><div class="day-route-map__head"><div><span>ROUTE MAP</span><strong>${route.title}</strong></div><small>${route.note}</small></div><div class="live-route-map" data-map-day="${dayIndex}" aria-label="확대·이동 가능한 ${route.title} 지도"><span class="map-loading">지도 불러오는 중…</span></div><div class="map-actions"><button type="button" class="map-locate">◎ 내 위치 보기</button><span>손가락으로 이동·확대 가능</span></div><ol>${stops}</ol><p>지도 번호가 아래 방문 순서와 같습니다. 점선은 방문 순서이며 실제 도로 경로는 아닙니다. 장소를 누르면 高德地图(Amap) 앱에서 도로 길찾기를 확인할 수 있습니다.</p></section>`);
   requestAnimationFrame(()=>renderDayMap($(`[data-map-day="${dayIndex}"]`),dayMapPoints[dayIndex]));
 });
@@ -187,7 +243,7 @@ $$('.tab').forEach(btn => btn.addEventListener('click', () => {
   window.scrollTo({top:$('.tabs').offsetTop,behavior:'smooth'});
 }));
 
-$('#placeList').innerHTML = places.map((p,i)=>`<article class="place"><div class="place__top"><button class="place__copy" data-copy-index="${i}"><strong>${p.ko}</strong><span>(${p.name})</span></button><span class="place__tag">${p.tag}</span></div><p class="place__address">${p.address}</p><div class="place__actions"><button data-copy-address="${i}">주소 복사</button><a href="https://uri.amap.com/search?keyword=${encodeURIComponent(p.name)}&city=310000&view=map&src=shanghai-trip-2026&callnative=1" target="_blank" rel="noopener">Amap 앱 열기 (高德地图)</a></div></article>`).join('');
+$('#placeList').innerHTML = places.map((p,i)=>`<article class="place"><div class="place__top"><button class="place__copy" data-copy-index="${i}"><strong>${p.ko}</strong><span>(${p.name})</span><small class="reading">읽기: ${nameReading(p.name)}</small></button><span class="place__tag">${p.tag}</span></div><p class="place__address">${p.address}</p><div class="place__actions"><button data-copy-address="${i}">주소 복사</button><a href="https://uri.amap.com/search?keyword=${encodeURIComponent(p.name)}&city=310000&view=map&src=shanghai-trip-2026&callnative=1" target="_blank" rel="noopener">Amap 앱 열기 (高德地图)</a></div></article>`).join('');
 $$('.timeline li[data-at]').forEach(li=>{
   const item=scheduleMaps[li.dataset.at];
   if(!item)return;
@@ -198,7 +254,8 @@ $$('.timeline li[data-at]').forEach(li=>{
 const foodDialog=$('#foodDialog'), foodDetail=$('#foodDetail');
 function openFood(key){
   const f=foodDetails[key]; if(!f)return;
-  foodDetail.innerHTML=`<p class="food-kicker">맛집 상세</p><h2>${f.name}</h2><span class="food-badge">${f.badge}</span><p class="food-address">📍 ${f.address}</p><p class="food-budget">예상: ${f.budget}</p><p class="food-intro">${f.intro}</p><h3>2인 추천 주문</h3><div class="menu-list">${f.menu.map(m=>`<div><strong>${m[1]}</strong><span>(${m[0]})</span><em>${m[2]}</em></div>`).join('')}</div><h3>주문 전략</h3><p>${f.order}</p><button class="order-phrase" data-phrase="${f.phrase}"><span>직원에게 보여주기 · 눌러서 복사</span><strong>${f.phrase}</strong></button>`;
+  const chinesePhrase=f.phrase.split(' · ')[0];
+  foodDetail.innerHTML=`<p class="food-kicker">맛집 상세</p><h2>${f.name}</h2><small class="reading">이름 읽기: ${nameReading(f.name)}</small><span class="food-badge">${f.badge}</span><p class="food-address">📍 ${f.address}</p><p class="food-budget">예상: ${f.budget}</p><p class="food-intro">${f.intro}</p><h3>2인 추천 주문</h3><div class="menu-list">${f.menu.map(m=>`<div><strong>${m[1]}</strong><div class="menu-chinese"><span>(${m[0]})</span>${menuReadings[m[0]]?`<small class="reading">${menuReadings[m[0]]}</small>`:''}</div><em>${m[2]}</em></div>`).join('')}</div><h3>주문 전략</h3><p>${f.order}</p><button class="order-phrase" data-phrase="${f.phrase}"><span>직원에게 보여주기 · 눌러서 복사</span><strong>${f.phrase}</strong><small class="reading">읽기: ${phraseReadings[chinesePhrase]||''}</small></button>`;
   $('.order-phrase',foodDetail).addEventListener('click',e=>copy(e.currentTarget.dataset.phrase));
   foodDialog.showModal();
 }
