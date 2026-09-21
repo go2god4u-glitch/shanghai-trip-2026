@@ -13,7 +13,6 @@ const places = [
   {name:'庄氏隆兴面馆（浙江中路店）',ko:'장씨네 게살국수',address:'上海市黄浦区浙江中路441号',tag:'면'},
   {name:'晟永兴（外滩店）',ko:'Sheng Yong Xing',address:'上海市黄浦区广东路20号外滩5号5楼东侧',tag:'베이징덕'},
   {name:'外滩',ko:'와이탄 / The Bund',address:'上海市黄浦区中山东一路',tag:'야경'},
-  {name:'喜粤8号（汝南街总店）',ko:'Canton 8 · 딤섬 대안',address:'上海市黄浦区汝南街63号',tag:'대안'},
   {name:'上海浦东国际机场1号航站楼',ko:'PVG Terminal 1',address:'上海市浦东新区迎宾大道6000号',tag:'공항'}
 ];
 
@@ -82,20 +81,25 @@ const foodDetails = {
     menu:[['北京烤鸭','베이징덕','반 마리 가능 여부 확인'],['鸭架汤 / 椒盐鸭架','오리뼈 탕 / 소금후추 튀김','하나만 선택'],['时蔬','제철 채소','1접시'],['主食','면·볶음밥','가급적 생략']],
     order:'두 사람은 베이징덕 반 마리, 채소 1개면 충분할 가능성이 큽니다. 창가석은 보장되지 않으므로 예약 메모에 요청만 남기고, 오리 준비 여부를 먼저 확인하세요.',
     phrase:'我们预订了晚上七点，两个人。北京烤鸭可以点半只吗？ · 저녁 7시 2인 예약했습니다. 베이징덕 반 마리 주문할 수 있나요?'
-  },
-  canton8:{
-    name:'喜粤8号 汝南街总店 · Canton 8 루난제 본점', badge:'Imperial Treasure 대안 · 딤섬 우선', address:'黄浦区汝南街63号 · 황푸구 루난제 63호', budget:'Imperial Treasure보다 합리적인 가격대',
-    intro:'딤섬 종류와 현지 식당 분위기, 가격을 우선할 때의 대안입니다. 현재 예약을 바꿀 때만 선택하세요.',
-    menu:[['喜粤虾饺皇','새우 하가우','최우선'],['鲜虾脆皮肠粉','바삭한 새우 창펀','대표 메뉴'],['烧卖','시우마이','기본'],['豉汁凤爪','두시 닭발','현지식'],['叉烧酥','차슈 페이스트리','추천'],['菠萝流沙包','솔티드에그 커스터드 번','추천'],['酥皮焗蛋挞','에그타르트','마무리'],['星级叉烧','차슈','딤섬 외 1접시']],
-    order:'2인은 딤섬 5~6접시부터 시작하고 차슈는 배가 남을 때 추가하세요. Michelin 2스타라도 서비스와 분위기는 Imperial Treasure보다 캐주얼합니다.',
-    phrase:'我们两个人，想吃招牌点心，请推荐五到六种。 · 두 명이고 대표 딤섬을 먹고 싶습니다. 5~6가지를 추천해주세요.'
   }
 };
+
+const dayRoutes = [
+  {title:'1일차 전체 동선',note:'공항 → 호텔 → 프렌치 컨세션 → 징안 → 호텔',stops:[['PVG T1','푸동공항','上海浦东国际机场1号航站楼','DiDi 50~70분'],['Pullman','호텔·짐 보관','上海斯格威铂尔曼大酒店','도보 5~10분'],['很久以前羊肉串','양꼬치','很久以前羊肉串 打浦路店','DiDi 약 20분'],['武康大楼·安福路','우캉맨션·안푸루','武康大楼','도보 산책'],['Maison Dongliang','메종 동량','栋梁之家 Maison Dongliang 武夷路','DiDi 약 20분'],['Prada 荣宅','프라다 룽자이','迷上 Prada 荣宅','도보 10~15분'],['张园·南京西路','장위안·난징시루','张园','DiDi 약 20분 → 호텔']]},
+  {title:'2일차 전체 동선',note:'호텔 → 신톈디 → 와이탄위안 → 난징동루 → 와이탄',stops:[['大壶春','다후춘 아침','大壶春 四川中路店','DiDi 후 식사'],['HARMAY 新天地','하메이 신톈디','HARMAY 話梅 新天地店','도보'],['Molly Tea 新天地','몰리티 신톈디','茉莉奶白 新天地店','DiDi · 11:20 출발'],['御宝轩','Imperial Treasure','御宝轩 益丰外滩源店','도보'],['外滩源','와이탄위안','外滩源','도보 또는 짧은 DiDi'],['庄氏隆兴面馆','장씨네 게살국수','庄氏隆兴面馆 浙江中路店','도보'],['南京东路','난징동루','南京东路步行街','도보·휴식'],['晟永兴 外滩店','성용싱 와이탄점','晟永兴 外滩店','도보'],['外滩·外滩源','와이탄 야경·빛축제','外滩','DiDi → 호텔']]},
+  {title:'3일차 전체 동선',note:'호텔 근처 산책 → 호텔 → 푸동공항',stops:[['Pullman','호텔 출발','上海斯格威铂尔曼大酒店','도보 또는 짧은 DiDi'],['田子坊·思南路','톈즈팡·쓰난루','田子坊','호텔 복귀'],['Pullman','체크아웃·점심','上海斯格威铂尔曼大酒店','13:15 출발'],['PVG T1','푸동공항 T1','上海浦东国际机场1号航站楼','DiDi 60~80분'],['MU5051','17:40 출발','上海浦东国际机场1号航站楼','20:45 인천 도착']]}
+];
 
 const $ = (s, root=document) => root.querySelector(s);
 const $$ = (s, root=document) => [...root.querySelectorAll(s)];
 const toast = (msg) => { const el=$('#toast'); el.textContent=msg; el.classList.add('show'); clearTimeout(toast.t); toast.t=setTimeout(()=>el.classList.remove('show'),1700); };
 const copy = async (text) => { try { await navigator.clipboard.writeText(text); } catch { const t=document.createElement('textarea'); t.value=text; document.body.append(t); t.select(); document.execCommand('copy'); t.remove(); } toast('복사했습니다'); };
+
+$$('.day').forEach((day,dayIndex)=>{
+  const route=dayRoutes[dayIndex]; if(!route)return;
+  const stops=route.stops.map((s,i)=>{const url=`https://uri.amap.com/search?keyword=${encodeURIComponent(s[2])}&city=310000&view=map&src=shanghai-trip-2026&callnative=1`;return `<li><a href="${url}" target="_blank" rel="noopener"><b>${i+1}</b><span><strong>${s[0]}</strong><small>${s[1]}</small></span></a>${i<route.stops.length-1?`<em>↓ ${s[3]}</em>`:''}</li>`;}).join('');
+  day.querySelector('header').insertAdjacentHTML('afterend',`<section class="day-route-map"><div class="day-route-map__head"><div><span>ROUTE MAP</span><strong>${route.title}</strong></div><small>${route.note}</small></div><ol>${stops}</ol><p>번호가 하루 방문 순서입니다. 장소를 누르면 高德地图(Amap) 앱에서 실제 위치와 길찾기를 엽니다.</p></section>`);
+});
 
 $$('.tab').forEach(btn => btn.addEventListener('click', () => {
   $$('.tab').forEach(x=>x.classList.toggle('is-active',x===btn));
@@ -118,14 +122,12 @@ function openFood(key){
   $('.order-phrase',foodDetail).addEventListener('click',e=>copy(e.currentTarget.dataset.phrase));
   foodDialog.showModal();
 }
-Object.keys(foodDetails).filter(k=>k!=='canton8').forEach(key=>{
+Object.keys(foodDetails).forEach(key=>{
   const li=$(`.timeline li[data-at="${key}"]`); if(!li)return;
   const title=$('strong',li); title.classList.add('food-link'); title.tabIndex=0; title.setAttribute('role','button'); title.setAttribute('aria-label',`${title.textContent} 상세정보 열기`);
   title.insertAdjacentHTML('beforeend',' <small>맛집 상세 ›</small>');
   title.addEventListener('click',()=>openFood(key)); title.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openFood(key);}});
 });
-const cantonSummary=$('.choice summary'); cantonSummary.insertAdjacentHTML('afterend','<button class="canton-detail">Canton 8 메뉴·주문 상세 보기</button>');
-$('.canton-detail').addEventListener('click',()=>openFood('canton8'));
 $('.food-dialog__close').addEventListener('click',()=>foodDialog.close());
 foodDialog.addEventListener('click',e=>{if(e.target===foodDialog)foodDialog.close();});
 $$('[data-copy-index]').forEach(b=>b.addEventListener('click',()=>copy(places[+b.dataset.copyIndex].name)));
