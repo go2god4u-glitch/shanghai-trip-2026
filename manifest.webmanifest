@@ -1,0 +1,12 @@
+{
+  "name":"상하이 2박 3일 · 2026",
+  "short_name":"상하이 여행",
+  "description":"중국에서도 오프라인으로 보는 상하이 여행 가이드",
+  "lang":"ko",
+  "start_url":"./",
+  "scope":"./",
+  "display":"standalone",
+  "background_color":"#f4efe6",
+  "theme_color":"#b9342b",
+  "icons":[{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
