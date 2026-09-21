@@ -41,42 +41,42 @@ const scheduleMaps = {
 
 const foodDetails = {
   '2026-09-23T12:40:00+08:00':{
-    name:'很久以前羊肉串 · 헌지우이첸 양꼬치', badge:'첫날 점심 · 예약 없음', address:'打浦路店 · 다푸루점', budget:'2인 약 ¥250~400 예상',
+    name:'헌지우이첸 양꼬치 (很久以前羊肉串)', badge:'첫날 점심 · 예약 없음', address:'다푸루점 (打浦路店)', budget:'2인 약 ¥250~400 예상',
     intro:'상하이 도착 직후 호텔 가까이에서 먹는 양꼬치 체인입니다. 입국 시간이 흔들릴 수 있어 예약 없이 가는 일정입니다.',
     menu:[['羊肉串','양꼬치','우선 주문'],['羊排串','양갈비 꼬치','고기 맛이 진함'],['烤韭菜','부추구이','고기 사이 곁들임'],['拍黄瓜','오이무침','입가심'],['烤馕','구운 난','마지막에 1개']],
     order:'2인은 꼬치 10~14개부터 시작하고, 채소 1개와 찬요리 1개를 더한 뒤 부족하면 추가하세요. 첫날 저녁 Prada 일정이 있으므로 과식하지 않는 것이 핵심입니다.',
     phrase:'我们两个人，羊肉串先来十串，不要太辣。 · 두 명이고 양꼬치 10개부터, 너무 맵지 않게 주세요.'
   },
   '2026-09-23T18:00:00+08:00':{
-    name:'迷上 Prada 荣宅 · Mi Shang Prada Rong Zhai', badge:'칵테일 + 가벼운 저녁 · 예약 권장', address:'陕西北路186号 · 산시베이루 186호', budget:'칵테일·파스타 기준 2인 약 ¥700~1,200 예상',
+    name:'Mi Shang Prada Rong Zhai (迷上 Prada 荣宅)', badge:'칵테일 + 가벼운 저녁 · 예약 권장', address:'산시베이루 186호 (陕西北路186号)', budget:'칵테일·파스타 기준 2인 약 ¥700~1,200 예상',
     intro:'Prada가 복원한 역사 건축 안에서 공간과 칵테일을 즐기는 곳입니다. 이날은 풀코스보다 칵테일 1잔씩과 파스타 중심이 일정에 맞습니다.',
     menu:[['Signature Cocktail','시그니처 칵테일','각 1잔'],['海胆手工意面','성게 수제 파스타','계절 메뉴면 우선'],['当季小食','제철 스낵','배고픔에 따라']],
     order:'18시 전후 예약을 권장합니다. 성게·해초 페스토 수제 푸실리는 계절 메뉴라 당일 제공 여부를 확인하세요. 칵테일 메뉴는 직원에게 달지 않은 추천으로 요청하면 좋습니다.',
     phrase:'我们预订了两位。请推荐不太甜的招牌鸡尾酒。 · 2인 예약했습니다. 너무 달지 않은 시그니처 칵테일을 추천해주세요.'
   },
   '2026-09-24T08:30:00+08:00':{
-    name:'大壶春 · 다후춘', badge:'현지식 아침 후보 · 가볍게', address:'四川中路店 · 쓰촨중루점', budget:'2인 약 ¥40~80 예상',
+    name:'다후춘 (大壶春)', badge:'현지식 아침 후보 · 가볍게', address:'쓰촨중루점 (四川中路店)', budget:'2인 약 ¥40~80 예상',
     intro:'상하이식 생전(밑면을 바삭하게 구운 고기 번)을 경험하기 좋은 아침 후보입니다. 이날 점심이 딤섬이므로 맛만 보는 양으로 주문합니다.',
     menu:[['鲜肉生煎','고기 생전','4개 단위부터'],['豆浆','두유','1잔 공유 가능'],['油条','요우탸오·튀김빵','1개']],
     order:'生煎은 안의 뜨거운 육즙을 조심하세요. 먼저 옆면을 살짝 열어 김을 빼고 먹습니다. 두 사람 합계 생전 4~8개면 충분합니다.',
     phrase:'鲜肉生煎一两，再来一杯豆浆。 · 고기 생전 1량(보통 4개)과 두유 한 잔 주세요.'
   },
   '2026-09-24T12:00:00+08:00':{
-    name:'御宝轩 · Imperial Treasure', badge:'예약 확정 · 9/24 12:00 · 2인 · Michelin 2★', address:'北京东路99号 益丰·外滩源4楼 · Yifeng Galleria 4F', budget:'딤섬 중심 2인 약 ¥350~550 예상',
+    name:'Imperial Treasure (御宝轩)', badge:'예약 확정 · 9/24 12:00 · 2인 · Michelin 2★', address:'Yifeng Galleria 4F (北京东路99号 益丰·外滩源4楼)', budget:'딤섬 중심 2인 약 ¥350~550 예상',
     intro:'고급스러운 공간과 안정적인 서비스가 강점인 광둥식 파인다이닝입니다. 예약을 유지한다면 딤섬 6~7접시를 골고루 먹고 이후 게살국수를 위해 여유를 남깁니다.',
     menu:[['笋尖鲜虾饺 ¥48','하가우','Must Try'],['香菇烧卖皇 ¥48','시우마이','Must Try'],['金网脆皮虾肠粉 ¥52','바삭한 새우 창펀','최우선'],['蜜汁叉烧酥 ¥42','차슈 페이스트리','추천'],['奶皇流沙包 ¥42','커스터드 번','추천'],['上海小笼包 ¥36','샤오롱바오','상하이식 비교'],['腊味煎萝卜糕 ¥45','무떡','배가 남으면']],
     order:'두 사람은 하가우, 시우마이, 바삭한 새우 창펀, 차슈 페이스트리, 커스터드 번을 기본으로 하고 1~2접시만 추가하세요. 차·서비스료와 최신 가격은 현장 메뉴 기준입니다.',
     phrase:'我们主要想吃点心，请按两个人的量推荐，不要点太多。 · 딤섬 위주로 두 명 분량을 추천해주세요. 너무 많이 주문하지 않게 해주세요.'
   },
   '2026-09-24T15:15:00+08:00':{
-    name:'庄氏隆兴面馆 · 장씨네 게살국수', badge:'간식처럼 1그릇 공유', address:'浙江中路441号 · 저장중루 441호', budget:'대표 게살면 1개 + 선택 메뉴 가격은 현장 확인',
+    name:'장씨네 게살국수 (庄氏隆兴面馆)', badge:'간식처럼 1그릇 공유', address:'저장중루 441호 (浙江中路441号)', budget:'대표 게살면 1개 + 선택 메뉴 가격은 현장 확인',
     intro:'딤섬 점심과 베이징덕 저녁 사이에 상하이 게살면을 맛보는 곳입니다. 독립된 한 끼가 아니라 두 사람이 1그릇만 공유하는 것이 일정의 핵심입니다.',
     menu:[['蟹粉拌面','게살 비빔면','1그릇 공유'],['蟹粉小笼','게살 샤오롱바오','배가 남을 때만'],['姜茶','생강차','게 요리 곁들임']],
     order:'면과 게살 소스가 따로 나오면 먼저 면 일부에 소스를 섞어 농도를 조절하세요. 저녁 19시 베이징덕 예약이 있으므로 추가 주문은 최소화합니다.',
     phrase:'蟹粉拌面一份，我们两个人分着吃。 · 게살 비빔면 한 그릇 주세요. 두 사람이 나눠 먹겠습니다.'
   },
   '2026-09-24T19:00:00+08:00':{
-    name:'晟永兴 外滩店 · 성용싱 와이탄점', badge:'예약 강력 권장 · 9/24 19:00', address:'广东路20号 外滩5号 5楼东侧 · Bund 5, 5F East', budget:'베이징덕 포함 2인 약 ¥900~1,500 예상',
+    name:'성용싱 와이탄점 (晟永兴 外滩店)', badge:'예약 강력 권장 · 9/24 19:00', address:'Bund 5, 5F East (广东路20号 外滩5号 5楼东侧)', budget:'베이징덕 포함 2인 약 ¥900~1,500 예상',
     intro:'와이탄에서 베이징덕과 야경을 함께 즐기는 여행의 메인 저녁입니다. 점심과 간식이 많으므로 예약 때 오리 반 마리 가능 여부를 확인해야 합니다.',
     menu:[['北京烤鸭','베이징덕','반 마리 가능 여부 확인'],['鸭架汤 / 椒盐鸭架','오리뼈 탕 / 소금후추 튀김','하나만 선택'],['时蔬','제철 채소','1접시'],['主食','면·볶음밥','가급적 생략']],
     order:'두 사람은 베이징덕 반 마리, 채소 1개면 충분할 가능성이 큽니다. 창가석은 보장되지 않으므로 예약 메모에 요청만 남기고, 오리 준비 여부를 먼저 확인하세요.',
@@ -90,6 +90,35 @@ const dayRoutes = [
   {title:'3일차 전체 동선',note:'호텔 근처 산책 → 호텔 → 푸동공항',stops:[['Pullman','호텔 출발','上海斯格威铂尔曼大酒店','도보 또는 짧은 DiDi'],['田子坊·思南路','톈즈팡·쓰난루','田子坊','호텔 복귀'],['Pullman','체크아웃·점심','上海斯格威铂尔曼大酒店','13:15 출발'],['PVG T1','푸동공항 T1','上海浦东国际机场1号航站楼','DiDi 60~80분'],['MU5051','17:40 출발','上海浦东国际机场1号航站楼','20:45 인천 도착']]}
 ];
 
+// Coordinates are either official Amap POI (GCJ-02) or verified address coordinates converted from WGS84.
+const dayMapPoints = [
+  [[121.8017619,31.1524464,'wgs'],[121.4664011,31.2062423,'wgs'],[121.468743,31.206185,'gcj'],[121.4337292,31.2062561,'wgs'],[121.427391,31.213324,'gcj'],[121.455673,31.226805,'gcj'],[121.460064,31.227971,'gcj']],
+  [[121.4847725,31.2367029,'wgs'],[121.4711337,31.2211074,'wgs'],[121.4706084,31.2209090,'wgs'],[121.488895,31.240436,'gcj'],[121.4841599,31.2443887,'wgs'],[121.4729059,31.2387686,'wgs'],[121.4792191,31.2391470,'wgs'],[121.4824706,31.2350025,'wgs'],[121.4876320,31.2353356,'wgs']],
+  [[121.4664011,31.2062423,'wgs'],[121.4641036,31.2103400,'wgs'],[121.4664011,31.2062423,'wgs'],[121.8017619,31.1524464,'wgs'],[121.8017619,31.1524464,'wgs']]
+];
+
+function wgsToGcj(lon,lat){
+  const a=6378245,ee=.00669342162296594323,pi=Math.PI;
+  let dLat=-100+2*lon+3*lat+.2*lat*lat+.1*lon*lat+.2*Math.sqrt(Math.abs(lon));
+  dLat+=(20*Math.sin(6*lon*pi)+20*Math.sin(2*lon*pi))*2/3+(20*Math.sin(lat*pi)+40*Math.sin(lat*pi/3))*2/3+(160*Math.sin(lat*pi/12)+320*Math.sin(lat*pi/30))*2/3;
+  let dLon=300+lon+2*lat+.1*lon*lon+.1*lon*lat+.1*Math.sqrt(Math.abs(lon));
+  dLon+=(20*Math.sin(6*lon*pi)+20*Math.sin(2*lon*pi))*2/3+(20*Math.sin(lon*pi)+40*Math.sin(lon*pi/3))*2/3+(150*Math.sin(lon*pi/12)+300*Math.sin(lon*pi/30))*2/3;
+  const rad=lat/180*pi,magic=1-ee*Math.sin(rad)**2,sqrt=Math.sqrt(magic);
+  return [lon+dLon*180/(a/sqrt*Math.cos(rad)*pi),lat+dLat*180/((a*(1-ee))/(magic*sqrt)*pi)];
+}
+
+function project(lon,lat,z){const size=256*2**z,s=Math.sin(lat*Math.PI/180);return [(lon+180)/360*size,(.5-Math.log((1+s)/(1-s))/(4*Math.PI))*size];}
+function renderDayMap(el,rawPoints){
+  const width=el.clientWidth||320,height=220,points=rawPoints.map(p=>p[2]==='wgs'?wgsToGcj(p[0],p[1]):[p[0],p[1]]);
+  let zoom=15,bounds;
+  for(;zoom>=9;zoom--){const ps=points.map(p=>project(p[0],p[1],zoom)),xs=ps.map(p=>p[0]),ys=ps.map(p=>p[1]);bounds=[Math.min(...xs),Math.min(...ys),Math.max(...xs),Math.max(...ys)];if(bounds[2]-bounds[0]<width-46&&bounds[3]-bounds[1]<height-46)break;}
+  const center=[(bounds[0]+bounds[2])/2,(bounds[1]+bounds[3])/2],origin=[center[0]-width/2,center[1]-height/2],minX=Math.floor(origin[0]/256),maxX=Math.floor((origin[0]+width)/256),minY=Math.floor(origin[1]/256),maxY=Math.floor((origin[1]+height)/256);
+  let tiles='';for(let x=minX;x<=maxX;x++)for(let y=minY;y<=maxY;y++){const sub=1+Math.abs(x+y)%4;tiles+=`<img alt="" src="https://webrd0${sub}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x=${x}&y=${y}&z=${zoom}" style="left:${x*256-origin[0]}px;top:${y*256-origin[1]}px">`;}
+  const screen=points.map(p=>{const q=project(p[0],p[1],zoom);return [q[0]-origin[0],q[1]-origin[1]];}),line=screen.map(p=>p.join(',')).join(' ');
+  const marks=screen.map((p,i)=>`<g><circle cx="${p[0]}" cy="${p[1]}" r="10"/><text x="${p[0]}" y="${p[1]+3.5}">${i+1}</text></g>`).join('');
+  el.innerHTML=`<div class="map-tiles">${tiles}</div><svg viewBox="0 0 ${width} ${height}" aria-label="실제 위치 기반 하루 전체 동선"><polyline points="${line}"/>${marks}</svg><span class="map-credit">© 高德地图 · 실제 위치</span>`;
+}
+
 const $ = (s, root=document) => root.querySelector(s);
 const $$ = (s, root=document) => [...root.querySelectorAll(s)];
 const toast = (msg) => { const el=$('#toast'); el.textContent=msg; el.classList.add('show'); clearTimeout(toast.t); toast.t=setTimeout(()=>el.classList.remove('show'),1700); };
@@ -97,8 +126,9 @@ const copy = async (text) => { try { await navigator.clipboard.writeText(text); 
 
 $$('.day').forEach((day,dayIndex)=>{
   const route=dayRoutes[dayIndex]; if(!route)return;
-  const stops=route.stops.map((s,i)=>{const url=`https://uri.amap.com/search?keyword=${encodeURIComponent(s[2])}&city=310000&view=map&src=shanghai-trip-2026&callnative=1`;return `<li><a href="${url}" target="_blank" rel="noopener"><b>${i+1}</b><span><strong>${s[0]}</strong><small>${s[1]}</small></span></a>${i<route.stops.length-1?`<em>↓ ${s[3]}</em>`:''}</li>`;}).join('');
-  day.querySelector('header').insertAdjacentHTML('afterend',`<section class="day-route-map"><div class="day-route-map__head"><div><span>ROUTE MAP</span><strong>${route.title}</strong></div><small>${route.note}</small></div><ol>${stops}</ol><p>번호가 하루 방문 순서입니다. 장소를 누르면 高德地图(Amap) 앱에서 실제 위치와 길찾기를 엽니다.</p></section>`);
+  const stops=route.stops.map((s,i)=>{const url=`https://uri.amap.com/search?keyword=${encodeURIComponent(s[2])}&city=310000&view=map&src=shanghai-trip-2026&callnative=1`;return `<li><a href="${url}" target="_blank" rel="noopener"><b>${i+1}</b><span><strong>${s[1]}</strong><small>(${s[0]})</small></span></a>${i<route.stops.length-1?`<em>↓ ${s[3]}</em>`:''}</li>`;}).join('');
+  day.querySelector('header').insertAdjacentHTML('afterend',`<section class="day-route-map"><div class="day-route-map__head"><div><span>ROUTE MAP</span><strong>${route.title}</strong></div><small>${route.note}</small></div><div class="live-route-map" data-map-day="${dayIndex}"><span class="map-loading">지도 불러오는 중…</span></div><ol>${stops}</ol><p>지도 번호가 아래 방문 순서와 같습니다. 선은 이동 순서를 표시하며, 장소를 누르면 高德地图(Amap) 앱에서 실제 도로 길찾기를 엽니다.</p></section>`);
+  requestAnimationFrame(()=>renderDayMap($(`[data-map-day="${dayIndex}"]`),dayMapPoints[dayIndex]));
 });
 
 $$('.tab').forEach(btn => btn.addEventListener('click', () => {
@@ -107,7 +137,7 @@ $$('.tab').forEach(btn => btn.addEventListener('click', () => {
   window.scrollTo({top:$('.tabs').offsetTop,behavior:'smooth'});
 }));
 
-$('#placeList').innerHTML = places.map((p,i)=>`<article class="place"><div class="place__top"><button class="place__copy" data-copy-index="${i}"><strong>${p.name}</strong><span>${p.ko}</span></button><span class="place__tag">${p.tag}</span></div><p class="place__address">${p.address}</p><div class="place__actions"><button data-copy-address="${i}">주소 복사</button><a href="https://uri.amap.com/search?keyword=${encodeURIComponent(p.name)}&city=310000&view=map&src=shanghai-trip-2026&callnative=1" target="_blank" rel="noopener">高德地图 · Amap 앱 열기</a></div></article>`).join('');
+$('#placeList').innerHTML = places.map((p,i)=>`<article class="place"><div class="place__top"><button class="place__copy" data-copy-index="${i}"><strong>${p.ko}</strong><span>(${p.name})</span></button><span class="place__tag">${p.tag}</span></div><p class="place__address">${p.address}</p><div class="place__actions"><button data-copy-address="${i}">주소 복사</button><a href="https://uri.amap.com/search?keyword=${encodeURIComponent(p.name)}&city=310000&view=map&src=shanghai-trip-2026&callnative=1" target="_blank" rel="noopener">Amap 앱 열기 (高德地图)</a></div></article>`).join('');
 $$('.timeline li[data-at]').forEach(li=>{
   const item=scheduleMaps[li.dataset.at];
   if(!item)return;
@@ -118,7 +148,7 @@ $$('.timeline li[data-at]').forEach(li=>{
 const foodDialog=$('#foodDialog'), foodDetail=$('#foodDetail');
 function openFood(key){
   const f=foodDetails[key]; if(!f)return;
-  foodDetail.innerHTML=`<p class="food-kicker">맛집 상세</p><h2>${f.name}</h2><span class="food-badge">${f.badge}</span><p class="food-address">📍 ${f.address}</p><p class="food-budget">예상: ${f.budget}</p><p class="food-intro">${f.intro}</p><h3>2인 추천 주문</h3><div class="menu-list">${f.menu.map(m=>`<div><strong>${m[0]}</strong><span>${m[1]}</span><em>${m[2]}</em></div>`).join('')}</div><h3>주문 전략</h3><p>${f.order}</p><button class="order-phrase" data-phrase="${f.phrase}"><span>직원에게 보여주기 · 눌러서 복사</span><strong>${f.phrase}</strong></button>`;
+  foodDetail.innerHTML=`<p class="food-kicker">맛집 상세</p><h2>${f.name}</h2><span class="food-badge">${f.badge}</span><p class="food-address">📍 ${f.address}</p><p class="food-budget">예상: ${f.budget}</p><p class="food-intro">${f.intro}</p><h3>2인 추천 주문</h3><div class="menu-list">${f.menu.map(m=>`<div><strong>${m[1]}</strong><span>(${m[0]})</span><em>${m[2]}</em></div>`).join('')}</div><h3>주문 전략</h3><p>${f.order}</p><button class="order-phrase" data-phrase="${f.phrase}"><span>직원에게 보여주기 · 눌러서 복사</span><strong>${f.phrase}</strong></button>`;
   $('.order-phrase',foodDetail).addEventListener('click',e=>copy(e.currentTarget.dataset.phrase));
   foodDialog.showModal();
 }
