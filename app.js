@@ -99,24 +99,38 @@ const dayMapPoints = [
 
 function wgsToGcj(lon,lat){
   const a=6378245,ee=.00669342162296594323,pi=Math.PI;
-  let dLat=-100+2*lon+3*lat+.2*lat*lat+.1*lon*lat+.2*Math.sqrt(Math.abs(lon));
-  dLat+=(20*Math.sin(6*lon*pi)+20*Math.sin(2*lon*pi))*2/3+(20*Math.sin(lat*pi)+40*Math.sin(lat*pi/3))*2/3+(160*Math.sin(lat*pi/12)+320*Math.sin(lat*pi/30))*2/3;
-  let dLon=300+lon+2*lat+.1*lon*lon+.1*lon*lat+.1*Math.sqrt(Math.abs(lon));
-  dLon+=(20*Math.sin(6*lon*pi)+20*Math.sin(2*lon*pi))*2/3+(20*Math.sin(lon*pi)+40*Math.sin(lon*pi/3))*2/3+(150*Math.sin(lon*pi/12)+300*Math.sin(lon*pi/30))*2/3;
+  if(lon<73.66||lon>135.05||lat<3.86||lat>53.55)return [lon,lat];
+  const x=lon-105,y=lat-35;
+  let dLat=-100+2*x+3*y+.2*y*y+.1*x*y+.2*Math.sqrt(Math.abs(x));
+  dLat+=(20*Math.sin(6*x*pi)+20*Math.sin(2*x*pi))*2/3+(20*Math.sin(y*pi)+40*Math.sin(y*pi/3))*2/3+(160*Math.sin(y*pi/12)+320*Math.sin(y*pi/30))*2/3;
+  let dLon=300+x+2*y+.1*x*x+.1*x*y+.1*Math.sqrt(Math.abs(x));
+  dLon+=(20*Math.sin(6*x*pi)+20*Math.sin(2*x*pi))*2/3+(20*Math.sin(x*pi)+40*Math.sin(x*pi/3))*2/3+(150*Math.sin(x*pi/12)+300*Math.sin(x*pi/30))*2/3;
   const rad=lat/180*pi,magic=1-ee*Math.sin(rad)**2,sqrt=Math.sqrt(magic);
   return [lon+dLon*180/(a/sqrt*Math.cos(rad)*pi),lat+dLat*180/((a*(1-ee))/(magic*sqrt)*pi)];
 }
 
-function project(lon,lat,z){const size=256*2**z,s=Math.sin(lat*Math.PI/180);return [(lon+180)/360*size,(.5-Math.log((1+s)/(1-s))/(4*Math.PI))*size];}
 function renderDayMap(el,rawPoints){
-  const width=el.clientWidth||320,height=220,points=rawPoints.map(p=>p[2]==='wgs'?wgsToGcj(p[0],p[1]):[p[0],p[1]]);
-  let zoom=15,bounds;
-  for(;zoom>=9;zoom--){const ps=points.map(p=>project(p[0],p[1],zoom)),xs=ps.map(p=>p[0]),ys=ps.map(p=>p[1]);bounds=[Math.min(...xs),Math.min(...ys),Math.max(...xs),Math.max(...ys)];if(bounds[2]-bounds[0]<width-46&&bounds[3]-bounds[1]<height-46)break;}
-  const center=[(bounds[0]+bounds[2])/2,(bounds[1]+bounds[3])/2],origin=[center[0]-width/2,center[1]-height/2],minX=Math.floor(origin[0]/256),maxX=Math.floor((origin[0]+width)/256),minY=Math.floor(origin[1]/256),maxY=Math.floor((origin[1]+height)/256);
-  let tiles='';for(let x=minX;x<=maxX;x++)for(let y=minY;y<=maxY;y++){const sub=1+Math.abs(x+y)%4;tiles+=`<img alt="" src="https://webrd0${sub}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x=${x}&y=${y}&z=${zoom}" style="left:${x*256-origin[0]}px;top:${y*256-origin[1]}px">`;}
-  const screen=points.map(p=>{const q=project(p[0],p[1],zoom);return [q[0]-origin[0],q[1]-origin[1]];}),line=screen.map(p=>p.join(',')).join(' ');
-  const marks=screen.map((p,i)=>`<g><circle cx="${p[0]}" cy="${p[1]}" r="10"/><text x="${p[0]}" y="${p[1]+3.5}">${i+1}</text></g>`).join('');
-  el.innerHTML=`<div class="map-tiles">${tiles}</div><svg viewBox="0 0 ${width} ${height}" aria-label="실제 위치 기반 하루 전체 동선"><polyline points="${line}"/>${marks}</svg><span class="map-credit">© 高德地图 · 실제 위치</span>`;
+  if(typeof L==='undefined'){el.textContent='지도를 불러오지 못했습니다. 새로고침하거나 Amap 앱 링크를 이용해 주세요.';return;}
+  el.textContent='';
+  const points=rawPoints.map(p=>{const [lon,lat]=p[2]==='wgs'?wgsToGcj(p[0],p[1]):p;return [lat,lon];});
+  const map=L.map(el,{scrollWheelZoom:false,zoomControl:true,attributionControl:true});
+  L.tileLayer('https://webrd{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',{subdomains:['01','02','03','04'],minZoom:3,maxZoom:18,attribution:'© 高德地图'}).addTo(map);
+  L.polyline(points,{color:'#b9342b',weight:4,opacity:.85,dashArray:'7 7'}).addTo(map);
+  points.forEach((point,i)=>L.marker(point,{icon:L.divIcon({className:'map-pin',html:String(i+1),iconSize:[25,25],iconAnchor:[12,12]})}).addTo(map).bindPopup(`${i+1}. ${dayRoutes[Number(el.dataset.mapDay)].stops[i][1]}`));
+  map.fitBounds(L.latLngBounds(points),{padding:[30,30],maxZoom:15});
+  const locate=el.parentElement.querySelector('.map-locate');
+  let locationMarker;
+  locate.addEventListener('click',()=>{
+    if(!navigator.geolocation){toast('이 기기에서 위치 확인을 지원하지 않습니다');return;}
+    locate.disabled=true;
+    navigator.geolocation.getCurrentPosition(position=>{
+      locate.disabled=false;
+      const [lon,lat]=wgsToGcj(position.coords.longitude,position.coords.latitude);
+      if(locationMarker)map.removeLayer(locationMarker);
+      locationMarker=L.circleMarker([lat,lon],{radius:9,color:'#fff',weight:3,fillColor:'#2674d9',fillOpacity:1}).addTo(map).bindPopup('현재 위치');
+      map.setView([lat,lon],Math.max(map.getZoom(),15));locationMarker.openPopup();
+    },()=>{locate.disabled=false;toast('위치를 확인할 수 없습니다. 위치 권한과 인터넷 연결을 확인해 주세요');},{enableHighAccuracy:true,timeout:12000,maximumAge:30000});
+  });
 }
 
 const $ = (s, root=document) => root.querySelector(s);
@@ -127,7 +141,7 @@ const copy = async (text) => { try { await navigator.clipboard.writeText(text); 
 $$('.day').forEach((day,dayIndex)=>{
   const route=dayRoutes[dayIndex]; if(!route)return;
   const stops=route.stops.map((s,i)=>{const url=`https://uri.amap.com/search?keyword=${encodeURIComponent(s[2])}&city=310000&view=map&src=shanghai-trip-2026&callnative=1`;return `<li><a href="${url}" target="_blank" rel="noopener"><b>${i+1}</b><span><strong>${s[1]}</strong><small>(${s[0]})</small></span></a>${i<route.stops.length-1?`<em>↓ ${s[3]}</em>`:''}</li>`;}).join('');
-  day.querySelector('header').insertAdjacentHTML('afterend',`<section class="day-route-map"><div class="day-route-map__head"><div><span>ROUTE MAP</span><strong>${route.title}</strong></div><small>${route.note}</small></div><div class="live-route-map" data-map-day="${dayIndex}"><span class="map-loading">지도 불러오는 중…</span></div><ol>${stops}</ol><p>지도 번호가 아래 방문 순서와 같습니다. 선은 이동 순서를 표시하며, 장소를 누르면 高德地图(Amap) 앱에서 실제 도로 길찾기를 엽니다.</p></section>`);
+  day.querySelector('header').insertAdjacentHTML('afterend',`<section class="day-route-map"><div class="day-route-map__head"><div><span>ROUTE MAP</span><strong>${route.title}</strong></div><small>${route.note}</small></div><div class="live-route-map" data-map-day="${dayIndex}" aria-label="확대·이동 가능한 ${route.title} 지도"><span class="map-loading">지도 불러오는 중…</span></div><div class="map-actions"><button type="button" class="map-locate">◎ 내 위치 보기</button><span>손가락으로 이동·확대 가능</span></div><ol>${stops}</ol><p>지도 번호가 아래 방문 순서와 같습니다. 점선은 방문 순서이며 실제 도로 경로는 아닙니다. 장소를 누르면 高德地图(Amap) 앱에서 도로 길찾기를 확인할 수 있습니다.</p></section>`);
   requestAnimationFrame(()=>renderDayMap($(`[data-map-day="${dayIndex}"]`),dayMapPoints[dayIndex]));
 });
 
