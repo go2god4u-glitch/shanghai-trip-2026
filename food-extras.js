@@ -17,7 +17,7 @@ const foodExtras=[
   ]},
   {title:'훠궈·오리·매운맛',items:[
     {ko:'하이디라오',zh:'海底捞',read:'하이디라오',area:'여러 지점 · 가까운 매장 선택',dish:'훠궈 · 토마토탕/마라탕',tip:'맵기 조절이 걱정되면 토마토탕과 마라탕을 반반 선택. 대기·예약은 방문 지점에서 확인하세요.',search:'海底捞 上海',source:'https://kr.trip.com/guide/food/shanghai-haidilao-reservation.html'},
-    {ko:'쓰지민푸',zh:'四季民福',read:'쓰지 민푸',area:'상하이 지점 확인',dish:'베이징덕',tip:'성용싱 예약이 어려울 때 대안. 오리 반 마리 가능 여부와 대기 시간을 먼저 확인하세요.',search:'四季民福 上海 烤鸭',source:'https://kr.trip.com/blog/shanghai-restaurant-recommendation-best10/'},
+    {ko:'쓰지민푸',zh:'四季民福',read:'쓰지 민푸',area:'상하이 지점 확인',dish:'베이징덕',tip:'베이징덕을 다른 곳에서도 비교하고 싶을 때. 오리 반 마리 가능 여부와 대기 시간을 먼저 확인하세요.',search:'四季民福 上海 烤鸭',source:'https://kr.trip.com/blog/shanghai-restaurant-recommendation-best10/'},
     {ko:'페이다추',zh:'费大厨',read:'페이 다추',area:'여러 지점 · 가까운 매장 선택',dish:'고추돼지고기볶음·후난요리',tip:'불향과 매운맛이 강한 편입니다. 덜 맵게 원하면 不要太辣라고 말하세요.',search:'费大厨 上海',source:'https://kr.trip.com/blog/shanghai-restaurant-recommendation-best10/'},
     {ko:'카오장',zh:'烤匠',read:'카오장',area:'상하이 지점 확인',dish:'마라 생선구이',tip:'2026년 화제성이 큰 매운 생선구이 체인. 지점에 따라 대기가 길 수 있어 식사 직전 지도에서 확인하세요.',search:'烤匠 麻辣烤鱼 上海',source:'https://kr.trip.com/guide/food/shanghai-restaurant.html'}
   ]},
